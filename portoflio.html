@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binjan | Visionary Designer (Enhanced)</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Enhanced Colors */
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.8); /* Slightly more opaque */
+            --primary: #6366f1; /* Indigo */
+            --accent: #22d3ee; /* Lighter Cyan for maximum pop */
+            --text-main: #f8fafc;
+            --text-sec: #cbd5e1; /* Lighter secondary text for better contrast */
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- AMBIENT BACKGROUND ANIMATION --- */
+        .blob-cont {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px); 
+            opacity: 0.5; 
+            animation: float 12s infinite alternate; 
+        }
+
+        .blob-1 { width: 450px; height: 450px; background: var(--primary); top: -15%; left: -15%; }
+        .blob-2 { width: 350px; height: 350px; background: var(--accent); bottom: -15%; right: -15%; animation-delay: 3s; }
+        .blob-3 { width: 250px; height: 250px; background: #ec4899; top: 45%; left: 45%; opacity: 0.3; animation-duration: 18s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 60px) scale(1.15); } 
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; } 
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(16px); 
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 1030;
+        }
+        .navbar-brand { font-weight: 800; letter-spacing: 1px; color: white !important; }
+        .nav-link { 
+            color: var(--text-sec) !important; 
+            transition: 0.3s; 
+            font-weight: 500;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--accent) !important; }
+        
+        .btn-outline-accent {
+            color: var(--accent) !important;
+            border-color: var(--accent) !important;
+            border-width: 2px;
+        }
+        .btn-outline-accent:hover {
+            background-color: rgba(34, 211, 238, 0.1); 
+            color: var(--text-main) !important;
+        }
+
+        /* --- GLASS CARDS --- */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-12px); 
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(34, 211, 238, 0.2); 
+        }
+
+        /* --- HERO --- */
+        .hero { padding: 160px 0 100px; }
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-img {
+            border-radius: 30px;
+            border: 3px solid var(--accent); 
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.4); 
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+        .btn-glow {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.8);
+        }
+
+        /* --- SERVICES / EXPERTISE --- */
+        .glass-card .learn-more {
+            color: var(--accent) !important; 
+        }
+
+        /* --- VERTICAL TIMELINE (EXPERIENCE) --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+        .timeline-item.left {
+            left: 0;
+        }
+        .timeline-item.right {
+            left: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-dark);
+            border: 3px solid var(--accent);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-item.right::after {
+            left: -10px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        .timeline-item:hover .timeline-content {
+             border-color: var(--primary);
+        }
+        /* Mobile View Timeline */
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item.right {
+                left: 0%;
+            }
+            .timeline-item.left::after {
+                left: 20px;
+            }
+            .timeline-item.right::after {
+                left: 20px;
+            }
+        }
+        
+        /* --- MODERNIZED PORTFOLIO STYLES --- */
+        .portfolio-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 16 / 12; 
+        }
+        .col-lg-8 .portfolio-item {
+            aspect-ratio: 16 / 7; 
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+        }
+        
+        /* Modern Overlay Effect */
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0; 
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip-path: inset(100% 0 0 0); 
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+            transition: clip-path 0.5s ease-out; 
+        }
+
+        .portfolio-item:hover img { 
+            transform: scale(1.05); 
+            filter: brightness(0.7); 
+        }
+        .portfolio-item:hover .portfolio-overlay { 
+            clip-path: inset(0% 0 0 0); 
+        }
+
+        .portfolio-overlay p {
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+        .portfolio-overlay .project-goal {
+            color: var(--text-sec);
+            margin-top: 5px;
+        }
+
+        /* ENHANCED CTA CARD GLOW */
+        .glass-card .btn-outline-light {
+            border: 2px solid white;
+            transition: 0.3s;
+        }
+        .glass-card:hover .btn-outline-light {
+            color: white !important;
+            background-color: var(--accent); 
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.6); 
+            transform: scale(1.05);
+        }
+
+        /* --- FOOTER --- */
+        footer { border-top: 1px solid rgba(255,255,255,0.1); background: #0b1120; }
+        .hover-scale {
+            transition: transform 0.3s ease-in-out, color 0.3s;
+            color: var(--text-sec) !important;
+        }
+        .hover-scale:hover {
+            transform: scale(1.3); 
+            color: var(--accent) !important; 
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="blob-cont">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">BINJAN<span style="color:var(--accent)">.</span></a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto gap-4 align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Expertise</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+                    <li class="nav-item"><a class="btn btn-outline-accent rounded-pill px-4" href="#contact">Let's Talk</a></li> 
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section id="home" class="hero d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1200">
+                    <h5 class="text-uppercase letter-spacing-2 mb-3 fw-bold" style="color: var(--accent) !important;">Welcome to my world</h5>
+                    <h1 class="display-3 fw-bold mb-3">Hi, I'm Atif ALi <br> <span class="gradient-text">I build <span class="typing-text"></span></span></h1>
+                    <p class="lead text-sec mb-4 w-100">Transforming complex problems into simple, beautiful, and intuitive interface designs.</p> 
+                    <div class="d-flex gap-3">
+                        <a href="#contact" class="btn btn-glow">Start Project</a>
+                        <a href="#work" class="btn btn-outline-accent rounded-pill px-4 py-2 d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-arrow-right-long"></i> View Portfolio 
+                        </a>
+                    </div>
+
+                    <div class="mt-5 row g-0 text-center text-lg-start">
+                        <div class="col-4 border-end border-secondary pe-3">
+                            <h2 class="fw-bold mb-0 text-white">10+</h2>
+                            <small class="text-sec">Years Exp.</small>
+                        </div>
+                        <div class="col-4 ps-3">
+                            <h2 class="fw-bold mb-0 text-white">285+</h2>
+                            <small class="text-sec">Projects</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center" data-aos="zoom-in" data-aos-duration="1200">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=700&auto=format&fit=crop" class="img-fluid hero-img" alt="Profile">
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+
+    <section id="services" class="py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <h2 class="fw-bold display-5">My <span class="text-primary">Expertise</span></h2>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <p class="text-sec">I don't just design; I create digital experiences that solve real-world problems and drive business growth.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card h-100">
+                        <div class="mb-4">
+                            <i class="fa-solid fa-layer-group fa-3x" style="color: var(--accent)"></i>
+                        </div>
+                        <h4 class="fw-bold">UI/UX Design</h4>
+                        <p class="text-sec mt-3">Crafting pixel-perfect interfaces with a focus on user journey and accessibility.</p>
+                        <a href="#" class="text-decoration-none fw-bold mt-2 d-inline-block learn-more">Explore Services <i class="fa-solid fa-arrow-right ms-1"></i></a> 
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass-card h-100">
+                        <div class="mb-4">
+                            <i class="fa-solid fa-code fa-3x" style="color: var(--primary)"></i>
+                        </div>
+                        <h4 class="fw-bold">Web Development</h4>
+                        <p class="text-sec mt-3">Building lightning-fast, responsive websites using modern technologies.</p>
+                        <a href="#" class="text-decoration-none fw-bold mt-2 d-inline-block learn-more">Explore Services <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="glass-card h-100">
+                        <div class="mb-4">
+                            <i class="fa-solid fa-wand-magic-sparkles fa-3x" style="color: #ec4899"></i>
+                        </div>
+                        <h4 class="fw-bold">Brand Identity</h4>
+                        <p class="text-sec mt-3">Defining your visual language with logos, typography, and color psychology.</p>
+                        <a href="#" class="text-decoration-none fw-bold mt-2 d-inline-block learn-more">Explore Services <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    
+    <section class="py-5">
+        <div class="container">
+             <h2 class="fw-bold display-5 mb-5 text-center" data-aos="fade-up">My Professional <span class="gradient-text">Journey</span></h2>
+             
+             <div class="timeline">
+                 <div class="timeline-item right" data-aos="fade-left">
+                     <div class="timeline-content">
+                         <h5 class="fw-bold mb-1">Senior Product Designer</h5>
+                         <p class="small fw-semibold mb-1" style="color: var(--accent) !important;">Global Tech Inc. • 2020 - Present</p>
+                         <p class="text-sec small mb-0">Led a cross-functional team of 5 designers, **driving** the product roadmap and **delivering** high-impact SaaS solutions that resulted in a **15% increase in user retention**.</p>
+                     </div>
+                 </div>
+
+                 <div class="timeline-item left" data-aos="fade-right">
+                     <div class="timeline-content">
+                         <h5 class="fw-bold mb-1">UI/UX Designer</h5>
+                         <p class="small fw-semibold mb-1" style="color: var(--accent) !important;">Creative Agency • 2017 - 2019</p>
+                         <p class="text-sec small mb-0">Designed and developed responsive, user-centric websites for major fintech startups, **successfully improving** user engagement by **30%**.</p>
+                     </div>
+                 </div>
+
+                 <div class="timeline-item right" data-aos="fade-left" data-aos-delay="100">
+                    <div class="timeline-content">
+                        <h5 class="fw-bold mb-1">Junior Web Developer</h5>
+                        <p class="small fw-semibold mb-1" style="color: var(--accent) !important;">Startup Hub • 2015 - 2017</p>
+                        <p class="text-sec small mb-0">Built and optimized front-end interfaces using HTML, CSS, and JavaScript, while **applying** foundational UX concepts to improve early-stage product usability.</p>
+                    </div>
+                </div>
+
+                 <div class="timeline-item left" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-content">
+                        <h5 class="fw-bold mb-1">B.S. Computer Science</h5>
+                        <p class="small fw-semibold mb-1" style="color: var(--accent) !important;">City University • 2011 - 2015</p>
+                        <p class="text-sec small mb-0">Specialized in **Human-Computer Interaction (HCI)** and core design principles, providing a strong technical and theoretical foundation for design roles.</p>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </section>
+    <hr>
+
+    <section id="work" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="zoom-in">
+                <h2 class="display-5 fw-bold">Selected <span class="gradient-text">Works</span></h2>
+                <p class="text-sec">A focused look at high-impact projects that define my creative and technical expertise.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=800&auto=format&fit=crop" alt="Crypto Dashboard">
+                        <div class="portfolio-overlay">
+                            <h4 class="fw-bold text-white">Crypto Dashboard</h4>
+                            <p class="text-light small">Fintech / UI Design</p>
+                            <p class="project-goal small">A clean, data-visualized platform for real-time asset management.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop" alt="Social Media App">
+                        <div class="portfolio-overlay">
+                            <h4 class="fw-bold text-white">Social Media App</h4>
+                            <p class="text-light small">Mobile / UX Research</p>
+                            <p class="project-goal small">A complete redesign focusing on intuitive navigation and community building.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800&auto=format&fit=crop" alt="Neon E-Commerce">
+                        <div class="portfolio-overlay">
+                            <h4 class="fw-bold text-white">Neon E-Commerce</h4>
+                            <p class="text-light small">Web Design / Branding</p>
+                            <p class="project-goal small">Full visual identity and e-commerce experience built for a modern apparel brand.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="400">
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Developer SaaS Platform">
+                        <div class="portfolio-overlay">
+                            <h4 class="fw-bold text-white">Developer SaaS Platform</h4>
+                            <p class="text-light small">Product Design</p>
+                            <p class="project-goal small">Streamlining complex workflows into a simplified, powerful tool for developers.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="glass-card h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                        <h3 class="fw-bold">View All Projects</h3>
+                        <a href="#" class="btn btn-outline-light rounded-pill mt-3">Dribbble Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+
+    <footer id="contact" class="py-5 text-center">
+        <div class="container" data-aos="fade-up">
+            <h2 class="display-4 fw-bold">Let's build the <br> <span class="gradient-text">Future Together</span></h2>
+            <p class="text-sec mt-3 mb-5 w-75 mx-auto">Have an idea? Let's discuss how we can make your digital presence stand out.</p> 
+            <a href="mailto:binjan10@gmail.com" class="btn btn-glow btn-lg px-5 mb-5">Say Hello 👋</a>
+
+            <div class="d-flex justify-content-center gap-4 mb-4">
+                <a href="#" class="text-white fs-4 hover-scale"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="text-white fs-4 hover-scale"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-white fs-4 hover-scale"><i class="fa-brands fa-dribbble"></i></a>
+            </div>
+            <p class="text-sec small">© 2025 Binjan. Made with <i class="fa-solid fa-heart text-danger"></i> & Code.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            offset: 120,
+            duration: 1000,
+        });
+
+        // Initialize Typed.js (Typing Effect)
+        var typed = new Typed('.typing-text', {
+            strings: ['Digital Experiences.', 'Mobile Apps.', 'Modern Brands.', 'Websites.'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 2000,
+            loop: true
+        });
+    </script>
+</body>
+</html>
